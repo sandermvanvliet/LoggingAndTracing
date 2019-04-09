@@ -65,7 +65,7 @@ namespace Demo.Car
             try
             {
                 _httpClient
-                    .PostAsync($"/api/vehicles/{_configuration.Vin}/data", content)
+                    .PostAsync($"/api/cars/{_configuration.Vin}/data", content)
                     .GetAwaiter()
                     .GetResult();
             }
