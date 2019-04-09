@@ -1,0 +1,11 @@
+{
+  "profiles": {
+    "Demo.Car": {
+      "commandName": "Project",
+      "environmentVariables": {
+        "CarApp:Vin": "VINNY_JONES",
+        "CarApp:CarApiUrl": "http://localhost:5001"
+      }
+    }
+  }
+}
