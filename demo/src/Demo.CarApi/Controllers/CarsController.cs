@@ -22,7 +22,7 @@ namespace Demo.CarApi.Controllers
         }
 
         [HttpPost("{vin}/data")]
-        public async Task<IActionResult> Post(string vin, [FromBody] string value)
+        public async Task<IActionResult> Post(string vin, [FromBody] CarData value)
         {
             _logger.Information($"Received car data for VIN: {vin}");
 

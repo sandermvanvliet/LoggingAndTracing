@@ -57,7 +57,8 @@ namespace Demo.Car
                 new
                 {
                     Timestamp = DateTime.UtcNow,
-                    ChargeState = _random.Next(1, 100)
+                    BatteryPercentage = _random.Next(1, 100),
+                    ChargeState = "Charging"
                 });
 
             var content = new StringContent(serializedContent, Encoding.UTF8, "application/json");
