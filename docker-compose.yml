@@ -34,5 +34,5 @@ services:
     image: demo-mobileapp:1.0
     environment:
       "MobileApp:MobileApiUrl": http://mobileapi/
-      "MobileApp:UserId": "0xDEADBEEF"
-      "MobileApp:Vin": "VINNY_JONES"
+      "MobileApp:UserId": MR_USER
+      "MobileApp:Vin": VINNY_JONES
