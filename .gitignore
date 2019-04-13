@@ -269,3 +269,4 @@ tools/
 !tools/packages.config
 coverage/
 nuget.config
+dist/
