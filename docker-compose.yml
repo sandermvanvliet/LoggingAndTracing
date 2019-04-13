@@ -1,7 +1,19 @@
 version: '3.7'
 
 services:
-  carapp:
+  carapp_1:
+    image: demo-car:1.0
+    environment:
+      "CarApp:CarApiUrl": http://carapi/
+      "CarApp:Vin": VINNY_JONES
+      
+  carapp_2:
+    image: demo-car:1.0
+    environment:
+      "CarApp:CarApiUrl": http://carapi/
+      "CarApp:Vin": VINNY_JONES
+      
+  carapp_3:
     image: demo-car:1.0
     environment:
       "CarApp:CarApiUrl": http://carapi/
