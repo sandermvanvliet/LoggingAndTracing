@@ -1,0 +1,28 @@
+version: '3.7'
+
+services:
+  carapp:
+    image: demo-car:1.0
+    environment:
+      "CarApp:CarApiUrl": http://carapi/
+      "CarApp:Vin": VINNY_JONES
+  
+  carapi:
+    image: demo-carapi:1.0
+    environment:
+      "CarApi:UserApiUrl": http://userapi/
+    expose:
+      - "80"
+    
+  userapi:
+    image: demo-userapi:1.0
+    environment:
+      "UserApi:CarApiUrl": http://carapi/
+    expose:
+      - "80"
+  
+  mobileapp:
+    image: demo-mobileapp:1.0
+    environment:
+      "MobileApp:UserApiUrl": http://userapi/
+      "MobileApp:UserId": "0xDEADBEEF"

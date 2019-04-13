@@ -47,6 +47,7 @@ namespace Demo.Car
 
             serviceCollection.AddHttpClient("car-api", _ =>
             {
+                Log.Logger.Information("Using CarApiUrl: " + configuration.CarApiUrl);
                 _.BaseAddress = new Uri(configuration.CarApiUrl);
                 _.Timeout = TimeSpan.FromSeconds(1);
             });
