@@ -7,7 +7,7 @@ namespace Demo.UserApi.Controllers
     public class UsersController : ControllerBase
     {
         [HttpGet("by-vin/{vin}")]
-        public IActionResult GetUserByVin()
+        public IActionResult GetUserByVin(string vin)
         {
             return Ok(new User {Name = "Joe Blogs"});
         }
