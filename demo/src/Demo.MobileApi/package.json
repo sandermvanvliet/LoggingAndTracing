@@ -1,0 +1,14 @@
+{
+  "name": "demo.mobileapi",
+  "version": "1.0.0",
+  "description": "Mobile API that is a gateway for backend APIs",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Sander van Vliet (Codenizer)",
+  "license": "MIT",
+  "dependencies": {
+    "express": "^4.16.4"
+  }
+}
