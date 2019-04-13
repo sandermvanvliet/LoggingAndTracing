@@ -51,7 +51,7 @@ namespace Demo.MobileApp
 
         private void CallApi()
         {
-            _logger.Information("Calling User API for user : " + _configuration.UserId);
+            _logger.Information("Calling Mobile API for user : " + _configuration.UserId);
 
             try
             {
@@ -72,7 +72,7 @@ namespace Demo.MobileApp
                     _logger.Information("Got user with name " + user.Name);
                 }
                 else {
-                    _logger.Error("User API responded with " + response.StatusCode);
+                    _logger.Error("Mobile API responded with " + response.StatusCode);
                 }
             }
             catch (OperationCanceledException)
