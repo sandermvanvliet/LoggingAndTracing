@@ -64,10 +64,15 @@ namespace Demo.Car
 
             try
             {
-                _httpClient
+                var response = _httpClient
                     .PostAsync($"/api/cars/{_configuration.Vin}/data", content)
                     .GetAwaiter()
                     .GetResult();
+
+                if(!response.IsSuccessStatusCode)
+                {
+                    _logger.Error("Publish failed because API returned status code " + response.StatusCode);
+                }
             }
             catch (OperationCanceledException)
             {
