@@ -9,7 +9,7 @@ using Serilog;
 
 namespace Demo.MobileApp
 {
-    public class CallUserApi : IHostedService
+    public class CallMobileApi : IHostedService
     {
         private const int MinimumInterval = 1; // Seconds
         private const int MaximumInterval = 4; // Seconds
@@ -19,13 +19,13 @@ namespace Demo.MobileApp
         private readonly Timer _timer;
         private HttpClient _httpClient;
 
-        public CallUserApi(ILogger logger, Configuration configuration, IHttpClientFactory httpClientFactory)
+        public CallMobileApi(ILogger logger, Configuration configuration, IHttpClientFactory httpClientFactory)
         {
             _logger = logger;
             _configuration = configuration;
             _timer = new Timer(_ => { CallApi(); });
             _random = new Random(1);
-            _httpClient = httpClientFactory.CreateClient("user-api");
+            _httpClient = httpClientFactory.CreateClient("mobile-api");
         }
 
         public Task StartAsync(CancellationToken cancellationToken)

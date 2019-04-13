@@ -40,15 +40,15 @@ namespace Demo.MobileApp
             var configuration = new Configuration();
             context.Configuration.GetSection("MobileApp").Bind(configuration);
 
-            serviceCollection.AddHostedService<CallUserApi>();
+            serviceCollection.AddHostedService<CallMobileApi>();
 
             serviceCollection.AddSingleton(Log.Logger);
             serviceCollection.AddSingleton(configuration);
 
-            serviceCollection.AddHttpClient("user-api", _ =>
+            serviceCollection.AddHttpClient("mobile-api", _ =>
             {
-                Log.Logger.Information("Using UserApiUrl: " + configuration.UserApiUrl);
-                _.BaseAddress = new Uri(configuration.UserApiUrl);
+                Log.Logger.Information("Using MobileApiUrl: " + configuration.MobileApiUrl);
+                _.BaseAddress = new Uri(configuration.MobileApiUrl);
                 _.Timeout = TimeSpan.FromSeconds(1);
             });
         }

@@ -20,9 +20,16 @@ services:
       "UserApi:CarApiUrl": http://carapi/
     expose:
       - "80"
+
+  mobileapi:
+      image: demo-mobileapi:1.0
+      environment:
+      "MobileApi:UserApiUrl": http://userapi/
+      "MobileApi:CarApiUrl": http://carapi/
   
   mobileapp:
     image: demo-mobileapp:1.0
     environment:
-      "MobileApp:UserApiUrl": http://userapi/
+      "MobileApp:MobileApiUrl": http://mobileapi/
       "MobileApp:UserId": "0xDEADBEEF"
+      "MobileApp:Vin": "VINNY_JONES"
