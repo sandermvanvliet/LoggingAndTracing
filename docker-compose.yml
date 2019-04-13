@@ -24,8 +24,11 @@ services:
   mobileapi:
       image: demo-mobileapi:1.0
       environment:
-      "MobileApi:UserApiUrl": http://userapi/
-      "MobileApi:CarApiUrl": http://carapi/
+        "MobileApi:UserApiUrl": http://userapi/
+        "MobileApi:CarApiUrl": http://carapi/
+        PORT: 80
+      expose:
+        - "80"
   
   mobileapp:
     image: demo-mobileapp:1.0

@@ -1,4 +1,5 @@
 #addin nuget:?package=Cake.Docker&version=0.9.7
+#addin nuget:?package=Cake.Npm&version=0.16.0
 #addin nuget:?package=Newtonsoft.Json&version=9.0.1
 
 var target = Argument("target", "Pull-Request");
@@ -94,6 +95,10 @@ Task("Restore")
 });
 
 Task("Build")
+	.IsDependentOn("Build-NetCore")
+	.IsDependentOn("Build-Node");
+
+Task("Build-NetCore")
   .Does(() => {	
 	var sourceVersion = GetOutputOfCommand("git", "rev-parse HEAD");
 
@@ -110,7 +115,34 @@ Task("Build")
 	DotNetCoreBuild(solutionFile, settings);
 });
 
+Task("Build-Node")
+	.Does(() => {
+		var buildSettings = new NpmRunScriptSettings 
+		{
+				ScriptName = "build",
+				LogLevel = NpmLogLevel.Info
+		};
+
+		buildSettings = (NpmRunScriptSettings)NpmSettingsExtensions.FromPath(buildSettings, "src\\Demo.MobileApi");
+
+		NpmRunScript(buildSettings);
+
+		var publishSettings = new NpmRunScriptSettings 
+		{
+				ScriptName = "publish",
+				LogLevel = NpmLogLevel.Info
+		};
+
+		publishSettings = (NpmRunScriptSettings)NpmSettingsExtensions.FromPath(publishSettings, "src\\Demo.MobileApi");
+
+		NpmRunScript(publishSettings);
+});
+
 Task("Publish")
+	.IsDependentOn("Publish-NetCore")
+	.IsDependentOn("Publish-Node");
+
+Task("Publish-NetCore")
 	.Does(() => {
 	var settings = new DotNetCorePublishSettings
 	{
@@ -140,6 +172,17 @@ Task("Publish")
 
 		DockerBuild(dockerSettings, settings.OutputDirectory.ToString());
 	}
+});
+
+Task("Publish-Node")
+	.Does(() => {
+		var dockerSettings = new DockerImageBuildSettings 
+		{
+				File = "src/Demo.MobileApi/Dockerfile",
+				Tag = new [] { "demo-mobileapi:" + version }
+		};
+
+		DockerBuild(dockerSettings, "./publish/mobileapi");
 });
 
 Task("Test-Unit")

@@ -6,7 +6,8 @@
   "scripts": {
     "start": "node dist/server.js",
     "typescript-build": "node_modules/.bin/tsc",
-    "build": "npm run typescript-build"
+    "build": "npm run typescript-build",
+    "publish": "copy package.json dist && copy package-lock.json dist && xcopy /E /I /Y .\\dist ..\\..\\publish\\mobileapi"
   },
   "author": "Sander van Vliet (Codenizer)",
   "license": "MIT",
