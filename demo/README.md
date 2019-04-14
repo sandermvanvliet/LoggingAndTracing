@@ -8,6 +8,7 @@
 - Mobile client (3 instances)
 - Cars (3 instances)
 - Load balancer for each API
+- Seq to capture logs
 
 - Continuously have the cars supplying data, randomize intervals
 - Mobile apps make requests continuously, randomize intervals

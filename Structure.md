@@ -16,12 +16,18 @@
 
 - Add common properties
   - [SHOW] how we can identify applications
+    - Netcore
+    - Node
   - Can you tell what's going on?
+
+------ DECIDE IF THIS IS NEEDED ------
 - Add structured properties
   - [NOTE] Only add one type of property in one app
   - [SHOW] Ability to find some things going on
   - Can you tell what's going on?
   - [NOTE] Talk about consistency? (NOT SURE HERE OR LATER)
+------ SNIP ------
+
 - Tracing
   - What would be good?
   - What options are there? (AWS X-Ray, Jaeger, OpenZipkin, OpenTracing, Google Dapper)
