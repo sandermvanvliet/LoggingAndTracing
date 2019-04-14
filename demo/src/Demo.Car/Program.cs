@@ -48,6 +48,7 @@ namespace Demo.Car
 
             serviceCollection.AddSingleton(Log.Logger);
             serviceCollection.AddSingleton(configuration);
+            
             serviceCollection.AddTransient<CorrelationMessageHandler>();
 
             serviceCollection

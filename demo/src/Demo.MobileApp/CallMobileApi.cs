@@ -3,9 +3,11 @@ using System.Net.Http;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
+using Demo.Middlewares;
 using Microsoft.Extensions.Hosting;
 using Newtonsoft.Json;
 using Serilog;
+using Serilog.Context;
 
 namespace Demo.MobileApp
 {
@@ -51,40 +53,47 @@ namespace Demo.MobileApp
 
         private void CallApi()
         {
-            _logger.Information("Calling Mobile API for user : " + _configuration.UserId);
+            // Initialize new context
+            CorrelationContext.Instance = new CorrelationContext();
 
-            try
+            // Push correlation id onto log context
+            using(LogContext.PushProperty("correlation_id", CorrelationContext.Instance.CorrelationId))
             {
-                var response = _httpClient
-                    .GetAsync($"/api/users/{_configuration.UserId}")
-                    .GetAwaiter()
-                    .GetResult();
+                _logger.Information("Calling Mobile API for user : " + _configuration.UserId);
 
-                if(response.IsSuccessStatusCode)
+                try
                 {
-                    var user = JsonConvert.DeserializeObject<User>(
-                        response
-                        .Content
-                        .ReadAsStringAsync()
+                    var response = _httpClient
+                        .GetAsync($"/api/users/{_configuration.UserId}")
                         .GetAwaiter()
-                        .GetResult());
-                    
-                    _logger.Information("Got user with name " + user.Name);
-                }
-                else {
-                    _logger.Error("Mobile API responded with " + response.StatusCode);
-                }
-            }
-            catch (OperationCanceledException)
-            {
-                _logger.Error("Call timed out");
-            }
-            catch (Exception ex)
-            {
-                _logger.Error("Call failed because " + ex.Message);
-            }
+                        .GetResult();
 
-            ScheduleNextInterval();
+                    if(response.IsSuccessStatusCode)
+                    {
+                        var user = JsonConvert.DeserializeObject<User>(
+                            response
+                            .Content
+                            .ReadAsStringAsync()
+                            .GetAwaiter()
+                            .GetResult());
+                        
+                        _logger.Information("Got user with name " + user.Name);
+                    }
+                    else {
+                        _logger.Error("Mobile API responded with " + response.StatusCode);
+                    }
+                }
+                catch (OperationCanceledException)
+                {
+                    _logger.Error("Call timed out");
+                }
+                catch (Exception ex)
+                {
+                    _logger.Error("Call failed because " + ex.Message);
+                }
+
+                ScheduleNextInterval();
+            }
         }
     }
 }

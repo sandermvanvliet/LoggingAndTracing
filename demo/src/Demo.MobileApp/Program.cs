@@ -50,12 +50,16 @@ namespace Demo.MobileApp
             serviceCollection.AddSingleton(Log.Logger);
             serviceCollection.AddSingleton(configuration);
 
-            serviceCollection.AddHttpClient("mobile-api", _ =>
-            {
-                Log.Logger.Information("Using MobileApiUrl: " + configuration.MobileApiUrl);
-                _.BaseAddress = new Uri(configuration.MobileApiUrl);
-                _.Timeout = TimeSpan.FromSeconds(1);
-            });
+            serviceCollection.AddTransient<CorrelationMessageHandler>();
+
+            serviceCollection
+                .AddHttpClient("mobile-api", _ =>
+                {
+                    Log.Logger.Information("Using MobileApiUrl: " + configuration.MobileApiUrl);
+                    _.BaseAddress = new Uri(configuration.MobileApiUrl);
+                    _.Timeout = TimeSpan.FromSeconds(1);
+                })
+                .AddHttpMessageHandler<CorrelationMessageHandler>();
         }
     }
 }
