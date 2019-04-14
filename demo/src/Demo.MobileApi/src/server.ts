@@ -8,6 +8,11 @@ import seq from "bunyan-seq";
 
 const app = express();
 
+// Configuration
+app.use(bodyParser.json());
+app.set("port", process.env.PORT || 3000);
+
+// Logging
 var logger = bunyan.createLogger({
   name: 'mobileapi',
   streams: [
@@ -22,15 +27,13 @@ var logger = bunyan.createLogger({
 
 app.set("logger", logger);
 
-app.use(bodyParser.json());
-app.set("port", process.env.PORT || 3000);
-
+// Routing
 app.get("/loadbalance/hello", (req, res) => {res.status(200); res.send(); });
-
 app.get("/api/users/:id", (req, res) => usersController.getUserById(req, res));
 app.get("/api/cars/:id", (req, res) => carsController.getCarById(req, res));
 app.get("/api/summary", (req, res) => summaryController.get(req, res));
 
+// Startup
 app.listen(app.get("port"), () =>
   logger.info(`App is running at http://localhost:${app.get("port")} in ${app.get("env")} mode`)
 );
