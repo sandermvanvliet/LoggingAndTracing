@@ -1,5 +1,6 @@
 import { Request, Response } from "express";
 import { UrlOptions, CoreOptions } from "request";
+import bunyan = require("bunyan");
 
 const defaultCarOptions = () => {
   return {
@@ -29,22 +30,28 @@ export const get = (req: Request, res: Response) => {
 
   let request = require("request");
 
+  let logger = <bunyan>req.app.get("logger");
+
+  logger.info("Retrieving car information");
   request(<UrlOptions & CoreOptions>carOptions, (error: any, response: Response, body: any) => {
       if (error != null) {
-        console.log(error);
+        logger.error(error);
         res.status(502);
         res.send();
       } else {
+        logger.info("Retrieving user information");
         let car = JSON.parse(body);
 
         request(<UrlOptions & CoreOptions>userOptions, (error: any, response: Response, body: any) => {
             if (error != null) {
-              console.log(error);
+              logger.error(error);
               res.status(502);
               res.send();
             } else {
               let user = JSON.parse(body);
               let combined = { ...car, ...user };
+              
+              logger.info("Created summary for car and user");
 
               res.status(response.statusCode);
               res.setHeader("Content-Type", "application/json");
