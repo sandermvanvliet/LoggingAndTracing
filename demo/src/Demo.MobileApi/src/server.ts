@@ -9,6 +9,8 @@ const app = express();
 app.use(bodyParser.json());
 app.set("port", process.env.PORT || 3000);
 
+app.get("/loadbalance/hello", (req, res) => {res.status(200); res.send(); });
+
 app.get("/api/users/:id", (req, res) => usersController.getUserById(req, res));
 app.get("/api/cars/:id", (req, res) => carsController.getCarById(req, res));
 app.get("/api/summary", (req, res) => summaryController.get(req, res));
