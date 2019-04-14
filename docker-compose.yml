@@ -42,7 +42,21 @@ services:
       expose:
         - "80"
   
-  mobileapp:
+  mobileapp_1:
+    image: demo-mobileapp:1.0
+    environment:
+      "MobileApp:MobileApiUrl": http://mobileapi/
+      "MobileApp:UserId": MR_USER
+      "MobileApp:Vin": VINNY_JONES
+  
+  mobileapp_2:
+    image: demo-mobileapp:1.0
+    environment:
+      "MobileApp:MobileApiUrl": http://mobileapi/
+      "MobileApp:UserId": MR_USER
+      "MobileApp:Vin": VINNY_JONES
+  
+  mobileapp_3:
     image: demo-mobileapp:1.0
     environment:
       "MobileApp:MobileApiUrl": http://mobileapi/
