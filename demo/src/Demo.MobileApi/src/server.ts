@@ -2,6 +2,7 @@ import express from "express";
 import * as bodyParser from "body-parser";
 import * as usersController from "./controllers/users";
 import * as carsController from "./controllers/cars";
+import * as summaryController from "./controllers/summary";
 
 const app = express();
 
@@ -10,6 +11,7 @@ app.set("port", process.env.PORT || 3000);
 
 app.get("/api/users/:id", (req, res) => usersController.getUserById(req, res));
 app.get("/api/cars/:id", (req, res) => carsController.getCarById(req, res));
+app.get("/api/summary", (req, res) => summaryController.get(req, res));
 
 app.listen(app.get("port"), () =>
   console.log(
