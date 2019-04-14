@@ -98,6 +98,8 @@ services:
       - carapi_2
     expose:
       - "80"
+    ports:
+      - "1936:1936"
     environment:
       BACKENDS: "carapi_1:80 carapi_2:80"
       DNS_ENABLED: "true"
@@ -112,6 +114,8 @@ services:
       - userapi_2
     expose:
       - "80"
+    ports:
+      - "1937:1936"
     environment:
       BACKENDS: "userapi_1:80 userapi_2:80"
       DNS_ENABLED: "true"
@@ -126,6 +130,8 @@ services:
       - mobileapi_2
     expose:
       - "80"
+    ports:
+      - "1938:1936"
     environment:
       BACKENDS: "mobileapi_1:80 mobileapi_2:80"
       DNS_ENABLED: "true"
