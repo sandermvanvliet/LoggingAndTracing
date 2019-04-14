@@ -10,6 +10,7 @@
 - Use Seq to receive log files
   - [SHOW] Aggregated logs in one place
   - Can you tell what's going on?
+  - [SHOW] How to Node
 - Add common properties
   - [SHOW] how we can identify applications
   - Can you tell what's going on?
