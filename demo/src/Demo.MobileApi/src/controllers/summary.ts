@@ -1,6 +1,7 @@
 import { Request, Response } from "express";
 import { UrlOptions, CoreOptions } from "request";
 import bunyan = require("bunyan");
+import { get } from "express-http-context";
 
 const defaultCarOptions = () => {
   return {
@@ -21,7 +22,7 @@ const defaultUserOptions = () => {
   };
 };
 
-export const get = (req: Request, res: Response) => {
+export const getSummary = (req: Request, res: Response) => {
   let carOptions = defaultCarOptions();
   carOptions.url = `${carOptions.url}/api/cars/VINNY_JONES`;
 
@@ -30,7 +31,7 @@ export const get = (req: Request, res: Response) => {
 
   let request = require("request");
 
-  let logger = <bunyan>req.app.get("logger");
+  let logger = <bunyan>get("logger");
 
   logger.info("Retrieving car information");
   request(<UrlOptions & CoreOptions>carOptions, (error: any, response: Response, body: any) => {

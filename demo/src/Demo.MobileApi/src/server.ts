@@ -7,6 +7,7 @@ import bunyan from "bunyan";
 import seq from "bunyan-seq";
 import { Guid } from "./guid";
 import { correlationmiddleware } from "./correlationmiddleware";
+import { set } from "express-http-context";
 
 const app = express();
 
@@ -27,7 +28,10 @@ var logger = bunyan.createLogger({
   app_instance: process.env.APP_INSTANCE || 'unknown'
 });
 
-app.set("logger", logger);
+app.use((req, res, next) => {
+  set("logger", logger);
+  next();
+});
 
 // Middleware
 app.use(correlationmiddleware);
@@ -36,7 +40,7 @@ app.use(correlationmiddleware);
 app.get("/loadbalance/hello", (req, res) => {res.status(200); res.send(); });
 app.get("/api/users/:id", (req, res) => usersController.getUserById(req, res));
 app.get("/api/cars/:id", (req, res) => carsController.getCarById(req, res));
-app.get("/api/summary", (req, res) => summaryController.get(req, res));
+app.get("/api/summary", (req, res) => summaryController.getSummary(req, res));
 
 // Startup
 app.listen(app.get("port"), () =>
