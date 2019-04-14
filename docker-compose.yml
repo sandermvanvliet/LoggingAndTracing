@@ -109,7 +109,7 @@ services:
       CAR_API_URL: http://carapi
       SEQ_URL: http://seq:5341
       APP_NAME: mobileapi
-      APP_INSTANCE: 1
+      APP_INSTANCE: 2
       PORT: 80
     expose:
       - "80"
