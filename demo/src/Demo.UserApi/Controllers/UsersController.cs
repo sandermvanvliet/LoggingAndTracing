@@ -21,5 +21,13 @@ namespace Demo.UserApi.Controllers
             
             return Ok(new User {Name = "Joe Blogs"});
         }
+
+        [HttpGet("{id}")]
+        public IActionResult GetUserById(string id)
+        {
+            _logger.Information($"Trying to find user with {id}");
+            
+            return Ok(new User {Name = "Joe Blogs"});
+        }
     }
 }
