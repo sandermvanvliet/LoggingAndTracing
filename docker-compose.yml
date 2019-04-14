@@ -1,64 +1,134 @@
-version: '3.7'
+version: "3.7"
 
 services:
+# Applications
   carapp_1:
     image: demo-car:1.0
     environment:
       "CarApp:CarApiUrl": http://carapi/
       "CarApp:Vin": VINNY_JONES
-      
+
   carapp_2:
     image: demo-car:1.0
     environment:
       "CarApp:CarApiUrl": http://carapi/
       "CarApp:Vin": VINNY_JONES
-      
+
   carapp_3:
     image: demo-car:1.0
     environment:
       "CarApp:CarApiUrl": http://carapi/
       "CarApp:Vin": VINNY_JONES
-  
-  carapi:
-    image: demo-carapi:1.0
-    environment:
-      "CarApi:UserApiUrl": http://userapi/
-    expose:
-      - "80"
-    
-  userapi:
-    image: demo-userapi:1.0
-    environment:
-      "UserApi:CarApiUrl": http://carapi/
-    expose:
-      - "80"
 
-  mobileapi:
-      image: demo-mobileapi:1.0
-      environment:
-        "USER_API_URL": http://userapi
-        "CAR_API_URL": http://carapi
-        PORT: 80
-      expose:
-        - "80"
-  
   mobileapp_1:
     image: demo-mobileapp:1.0
     environment:
       "MobileApp:MobileApiUrl": http://mobileapi/
       "MobileApp:UserId": MR_USER
       "MobileApp:Vin": VINNY_JONES
-  
+
   mobileapp_2:
     image: demo-mobileapp:1.0
     environment:
       "MobileApp:MobileApiUrl": http://mobileapi/
       "MobileApp:UserId": MR_USER
       "MobileApp:Vin": VINNY_JONES
-  
+
   mobileapp_3:
     image: demo-mobileapp:1.0
     environment:
       "MobileApp:MobileApiUrl": http://mobileapi/
       "MobileApp:UserId": MR_USER
       "MobileApp:Vin": VINNY_JONES
+
+# APIs
+  carapi_1:
+    image: demo-carapi:1.0
+    environment:
+      "CarApi:UserApiUrl": http://userapi/
+    expose:
+      - "80"
+    ports:
+      - "88:80"
+  
+  carapi_2:
+    image: demo-carapi:1.0
+    environment:
+      "CarApi:UserApiUrl": http://userapi/
+    expose:
+      - "80"
+
+  userapi_1:
+    image: demo-userapi:1.0
+    environment:
+      "UserApi:CarApiUrl": http://carapi/
+    expose:
+      - "80"
+
+  userapi_2:
+    image: demo-userapi:1.0
+    environment:
+      "UserApi:CarApiUrl": http://carapi/
+    expose:
+      - "80"
+
+  mobileapi_1:
+    image: demo-mobileapi:1.0
+    environment:
+      "USER_API_URL": http://userapi
+      "CAR_API_URL": http://carapi
+      PORT: 80
+    expose:
+      - "80"
+
+  mobileapi_2:
+    image: demo-mobileapi:1.0
+    environment:
+      "USER_API_URL": http://userapi
+      "CAR_API_URL": http://carapi
+      PORT: 80
+    expose:
+      - "80"
+
+# Load balancers
+  carapi:
+    image: eeacms/haproxy
+    depends_on:
+      - carapi_1
+      - carapi_2
+    expose:
+      - "80"
+    environment:
+      BACKENDS: "carapi_1:80 carapi_2:80"
+      DNS_ENABLED: "true"
+      LOG_LEVEL: "info"
+      FRONTEND_PORT: 80
+      HTTPCHK: "GET /loadbalance/hello" # Point to the middleware in ASPNet Core
+
+  userapi:
+    image: eeacms/haproxy
+    depends_on:
+      - userapi_1
+      - userapi_2
+    expose:
+      - "80"
+    environment:
+      BACKENDS: "userapi_1:80 userapi_2:80"
+      DNS_ENABLED: "true"
+      LOG_LEVEL: "info"
+      FRONTEND_PORT: 80
+      HTTPCHK: "GET /loadbalance/hello" # Point to the middleware in ASPNet Core
+
+  mobileapi:
+    image: eeacms/haproxy
+    depends_on:
+      - mobileapi_1
+      - mobileapi_2
+    expose:
+      - "80"
+    environment:
+      BACKENDS: "mobileapi_1:80 mobileapi_2:80"
+      DNS_ENABLED: "true"
+      LOG_LEVEL: "info"
+      FRONTEND_PORT: 80
+      HTTPCHK: "GET /loadbalance/hello"
