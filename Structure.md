@@ -35,10 +35,10 @@
     - Tracing header with correlation id
     - Create and forward
   - [NOTE] Add diagram
-  - [SHOW] Correlation propagation
-  - [NOTE] Multiple steps?
-  - [NOTE] Correlation context?
   - [SHOW] AspNetCore middleware
+  - [SHOW] Node middleware
+  - [SHOW] Correlation propagation
+    - [NOTE] Correlation context?
 - But where is it coming from?
   - [SHOW] Client headers
   - [SHOW] Dashboard?
