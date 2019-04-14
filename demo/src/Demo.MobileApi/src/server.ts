@@ -3,8 +3,22 @@ import * as bodyParser from "body-parser";
 import * as usersController from "./controllers/users";
 import * as carsController from "./controllers/cars";
 import * as summaryController from "./controllers/summary";
+import bunyan from "bunyan";
+import seq from "bunyan-seq";
 
 const app = express();
+
+var logger = bunyan.createLogger({
+  name: 'myapp',
+  streams: [
+      seq.createStream({
+          serverUrl: process.env.SEQ_URL || 'http://localhost:5341',
+          level: 'info'
+      })
+  ]
+});
+
+app.set("logger", logger);
 
 app.use(bodyParser.json());
 app.set("port", process.env.PORT || 3000);
@@ -16,9 +30,5 @@ app.get("/api/cars/:id", (req, res) => carsController.getCarById(req, res));
 app.get("/api/summary", (req, res) => summaryController.get(req, res));
 
 app.listen(app.get("port"), () =>
-  console.log(
-    "  App is running at http://localhost:%d in %s mode",
-    app.get("port"),
-    app.get("env")
-  )
+  logger.info(`App is running at http://localhost:${app.get("port")} in ${app.get("env")} mode`)
 );
