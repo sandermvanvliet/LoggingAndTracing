@@ -43,6 +43,8 @@ namespace Demo.UserApi
             }
             
             app.UseMiddleware<LoadBalanceHello>();
+            
+            app.UseMiddleware<CorrelationMiddleware>();
 
             app.UseHttpsRedirection();
             app.UseMvc();

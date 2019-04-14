@@ -44,6 +44,8 @@ namespace Demo.CarApi
 
             app.UseMiddleware<LoadBalanceHello>();
 
+            app.UseMiddleware<CorrelationMiddleware>();
+
             app.UseHttpsRedirection();
             app.UseMvc();
         }
