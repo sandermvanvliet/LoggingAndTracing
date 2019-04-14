@@ -37,7 +37,7 @@ services:
       image: demo-mobileapi:1.0
       environment:
         "USER_API_URL": http://userapi
-        "CAR_API_URI": http://carapi
+        "CAR_API_URL": http://carapi
         PORT: 80
       expose:
         - "80"
