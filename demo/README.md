@@ -2,11 +2,12 @@
 
 ## Structure
 
-- Car API (3 instances)
-- User API (3 instances)
-- Mobile API (3 instances)
-- Mobile client (10 instances)
-- Cars (10 instances)
+- Car API (2 instances)
+- User API (2 instances)
+- Mobile API (2 instances)
+- Mobile client (3 instances)
+- Cars (3 instances)
+- Load balancer for each API
 
 - Continuously have the cars supplying data, randomize intervals
 - Mobile apps make requests continuously, randomize intervals
