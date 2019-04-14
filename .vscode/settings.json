@@ -3,5 +3,9 @@
         "**/bin/": true,
         "**/node_modules/": true,
         "**/obj/": true
+    },
+    "files.watcherExclude": {
+        "**/bin/": true,
+        "**/obj/": true
     }
 }
