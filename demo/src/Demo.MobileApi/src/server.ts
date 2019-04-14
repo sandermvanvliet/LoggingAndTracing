@@ -9,13 +9,15 @@ import seq from "bunyan-seq";
 const app = express();
 
 var logger = bunyan.createLogger({
-  name: 'myapp',
+  name: 'mobileapi',
   streams: [
       seq.createStream({
           serverUrl: process.env.SEQ_URL || 'http://localhost:5341',
           level: 'info'
       })
-  ]
+  ],
+  app_name: process.env.APP_NAME || 'unknown',
+  app_instance: process.env.APP_INSTANCE || 'unknown'
 });
 
 app.set("logger", logger);
