@@ -5,6 +5,8 @@ import * as carsController from "./controllers/cars";
 import * as summaryController from "./controllers/summary";
 import bunyan from "bunyan";
 import seq from "bunyan-seq";
+import { Guid } from "./guid";
+import { correlationmiddleware } from "./correlationmiddleware";
 
 const app = express();
 
@@ -26,6 +28,9 @@ var logger = bunyan.createLogger({
 });
 
 app.set("logger", logger);
+
+// Middleware
+app.use(correlationmiddleware);
 
 // Routing
 app.get("/loadbalance/hello", (req, res) => {res.status(200); res.send(); });
