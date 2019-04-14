@@ -56,5 +56,21 @@ namespace Demo.CarApi.Controllers
                 return StatusCode((int)HttpStatusCode.BadGateway);
             }
         }
+
+        [HttpGet("{vin}")]
+        public async Task<IActionResult> GetByVin(string vin)
+        {
+            if(string.IsNullOrEmpty(vin))
+            {
+                return BadRequest();
+            }
+
+            _logger.Information($"Returning car for {vin}");
+
+            return Ok(new Car {
+                Id = Guid.NewGuid(),
+                Vin = vin
+            });
+        }
     }
 }
