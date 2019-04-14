@@ -162,15 +162,18 @@ Task("Publish-NetCore")
 
 		DotNetCorePublish(project.ToString(), settings);
 
-		var tag = project.GetFilenameWithoutExtension().ToString().Replace(".", "-").ToLower();
-
-		var dockerSettings = new DockerImageBuildSettings 
+		if(FileExists(project.GetDirectory() + "/Dockerfile"))
 		{
-				File = project.GetDirectory() + "/Dockerfile",
-				Tag = new [] { tag + ":" + version }
-		};
+			var tag = project.GetFilenameWithoutExtension().ToString().Replace(".", "-").ToLower();
 
-		DockerBuild(dockerSettings, settings.OutputDirectory.ToString());
+			var dockerSettings = new DockerImageBuildSettings 
+			{
+					File = project.GetDirectory() + "/Dockerfile",
+					Tag = new [] { tag + ":" + version }
+			};
+
+			DockerBuild(dockerSettings, settings.OutputDirectory.ToString());
+		}
 	}
 });
 
