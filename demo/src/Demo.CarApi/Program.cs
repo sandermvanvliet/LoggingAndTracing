@@ -1,4 +1,5 @@
 ﻿using System;
+using Demo.Middlewares;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -13,6 +14,7 @@ namespace Demo.CarApi
         {
             Log.Logger = new LoggerConfiguration()
                 .Enrich.FromLogContext()
+                .Enrich.WithCommonProperties()
                 .WriteTo.Seq("http://seq:5341")
                 .CreateLogger();
 

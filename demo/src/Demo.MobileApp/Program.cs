@@ -1,4 +1,5 @@
 ﻿using System;
+using Demo.Middlewares;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
@@ -13,6 +14,7 @@ namespace Demo.MobileApp
         {
             Log.Logger = new LoggerConfiguration()
                 .Enrich.FromLogContext()
+                .Enrich.WithCommonProperties()
                 .WriteTo.Seq("http://seq:5341")
                 .CreateLogger();
 

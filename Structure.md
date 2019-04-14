@@ -11,6 +11,9 @@
   - [SHOW] Aggregated logs in one place
   - Can you tell what's going on?
   - [SHOW] How to Node
+
+------ MAYBE NEED TO INTRODUCE STRUCTURED LOGGING HERE? ------
+
 - Add common properties
   - [SHOW] how we can identify applications
   - Can you tell what's going on?

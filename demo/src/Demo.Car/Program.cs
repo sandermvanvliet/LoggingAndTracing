@@ -4,6 +4,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using Serilog;
+using Demo.Middlewares;
 
 namespace Demo.Car
 {
@@ -13,6 +14,7 @@ namespace Demo.Car
         {
             Log.Logger = new LoggerConfiguration()
                 .Enrich.FromLogContext()
+                .Enrich.WithCommonProperties()
                 .WriteTo.Seq("http://seq:5341")
                 .CreateLogger();
 

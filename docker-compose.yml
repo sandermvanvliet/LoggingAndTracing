@@ -7,18 +7,24 @@ services:
     environment:
       "CarApp:CarApiUrl": http://carapi/
       "CarApp:Vin": VINNY_JONES
+      APP_NAME: carapp
+      APP_INSTANCE: 1
 
   carapp_2:
     image: demo-car:1.0
     environment:
       "CarApp:CarApiUrl": http://carapi/
       "CarApp:Vin": VINNY_JONES
+      APP_NAME: carapp
+      APP_INSTANCE: 2
 
   carapp_3:
     image: demo-car:1.0
     environment:
       "CarApp:CarApiUrl": http://carapi/
       "CarApp:Vin": VINNY_JONES
+      APP_NAME: carapp
+      APP_INSTANCE: 3
 
   mobileapp_1:
     image: demo-mobileapp:1.0
@@ -26,6 +32,8 @@ services:
       "MobileApp:MobileApiUrl": http://mobileapi/
       "MobileApp:UserId": MR_USER
       "MobileApp:Vin": VINNY_JONES
+      APP_NAME: mobileapp
+      APP_INSTANCE: 1
 
   mobileapp_2:
     image: demo-mobileapp:1.0
@@ -33,6 +41,8 @@ services:
       "MobileApp:MobileApiUrl": http://mobileapi/
       "MobileApp:UserId": MR_USER
       "MobileApp:Vin": VINNY_JONES
+      APP_NAME: mobileapp
+      APP_INSTANCE: 2
 
   mobileapp_3:
     image: demo-mobileapp:1.0
@@ -40,21 +50,25 @@ services:
       "MobileApp:MobileApiUrl": http://mobileapi/
       "MobileApp:UserId": MR_USER
       "MobileApp:Vin": VINNY_JONES
+      APP_NAME: mobileapp
+      APP_INSTANCE: 3
 
 # APIs
   carapi_1:
     image: demo-carapi:1.0
     environment:
       "CarApi:UserApiUrl": http://userapi/
+      APP_NAME: carapi
+      APP_INSTANCE: 1
     expose:
       - "80"
-    ports:
-      - "88:80"
   
   carapi_2:
     image: demo-carapi:1.0
     environment:
       "CarApi:UserApiUrl": http://userapi/
+      APP_NAME: carapi
+      APP_INSTANCE: 2
     expose:
       - "80"
 
@@ -62,6 +76,8 @@ services:
     image: demo-userapi:1.0
     environment:
       "UserApi:CarApiUrl": http://carapi/
+      APP_NAME: userapi
+      APP_INSTANCE: 1
     expose:
       - "80"
 
@@ -69,15 +85,19 @@ services:
     image: demo-userapi:1.0
     environment:
       "UserApi:CarApiUrl": http://carapi/
+      APP_NAME: userapi
+      APP_INSTANCE: 2
     expose:
       - "80"
 
   mobileapi_1:
     image: demo-mobileapi:1.0
     environment:
-      "USER_API_URL": http://userapi
-      "CAR_API_URL": http://carapi
-      "SEQ_URL": "http://seq:5341"
+      USER_API_URL: http://userapi
+      CAR_API_URL: http://carapi
+      SEQ_URL: http://seq:5341
+      APP_NAME: mobileapi
+      APP_INSTANCE: 1
       PORT: 80
     expose:
       - "80"
@@ -85,9 +105,11 @@ services:
   mobileapi_2:
     image: demo-mobileapi:1.0
     environment:
-      "USER_API_URL": http://userapi
-      "CAR_API_URL": http://carapi
-      "SEQ_URL": "http://seq:5341"
+      USER_API_URL: http://userapi
+      CAR_API_URL: http://carapi
+      SEQ_URL: http://seq:5341
+      APP_NAME: mobileapi
+      APP_INSTANCE: 1
       PORT: 80
     expose:
       - "80"
