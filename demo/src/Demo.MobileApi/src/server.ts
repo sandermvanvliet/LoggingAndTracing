@@ -7,12 +7,13 @@ import bunyan from "bunyan";
 import seq from "bunyan-seq";
 import { Guid } from "./guid";
 import { correlationmiddleware } from "./correlationmiddleware";
-import { set } from "express-http-context";
+import { set, middleware } from "express-http-context";
 
 const app = express();
 
 // Configuration
 app.use(bodyParser.json());
+app.use(middleware); // Enable http context
 app.set("port", process.env.PORT || 3000);
 
 // Logging

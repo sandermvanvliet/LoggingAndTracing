@@ -8,7 +8,8 @@ const defaultOptions = () => {
     url: process.env.USER_API_URL,
     method: "GET",
     headers: {
-      "Content-Type": "application/json"
+      "Content-Type": "application/json",
+      "Demo-CorrelationId": get("correlation_id")
     }
   };
 };

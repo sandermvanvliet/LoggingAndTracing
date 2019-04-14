@@ -14,6 +14,7 @@ export const correlationmiddleware = (req: Request, res: Response, next: NextFun
     let logger = <bunyan>get("logger");
 
     set("logger", logger.child({correlation_id: correlationId}));
+    set("correlation_id", correlationId);
     
     next();
   };
