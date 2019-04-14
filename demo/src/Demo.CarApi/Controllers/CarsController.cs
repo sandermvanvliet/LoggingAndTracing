@@ -58,16 +58,17 @@ namespace Demo.CarApi.Controllers
         }
 
         [HttpGet("{vin}")]
-        public async Task<IActionResult> GetByVin(string vin)
+        public IActionResult GetByVin(string vin)
         {
-            if(string.IsNullOrEmpty(vin))
+            if (string.IsNullOrEmpty(vin))
             {
                 return BadRequest();
             }
 
             _logger.Information($"Returning car for {vin}");
 
-            return Ok(new Car {
+            return Ok(new Car
+            {
                 Id = Guid.NewGuid(),
                 Vin = vin
             });
