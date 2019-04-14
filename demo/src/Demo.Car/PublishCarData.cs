@@ -3,9 +3,11 @@ using System.Net.Http;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
+using Demo.Middlewares;
 using Microsoft.Extensions.Hosting;
 using Newtonsoft.Json;
 using Serilog;
+using Serilog.Context;
 
 namespace Demo.Car
 {
@@ -51,40 +53,47 @@ namespace Demo.Car
 
         private void Publish()
         {
-            _logger.Information("Publishing car data for VIN: " + _configuration.Vin);
+            // Initialize new context
+            CorrelationContext.Instance = new CorrelationContext();
 
-            var serializedContent = JsonConvert.SerializeObject(
-                new
-                {
-                    Timestamp = DateTime.UtcNow,
-                    BatteryPercentage = _random.Next(1, 100),
-                    ChargeState = "Charging"
-                });
-
-            var content = new StringContent(serializedContent, Encoding.UTF8, "application/json");
-
-            try
+            // Push correlation id onto log context
+            using(LogContext.PushProperty("correlation_id", CorrelationContext.Instance.CorrelationId))
             {
-                var response = _httpClient
-                    .PostAsync($"/api/cars/{_configuration.Vin}/data", content)
-                    .GetAwaiter()
-                    .GetResult();
+                _logger.Information("Publishing car data for VIN: " + _configuration.Vin);
 
-                if(!response.IsSuccessStatusCode)
+                var serializedContent = JsonConvert.SerializeObject(
+                    new
+                    {
+                        Timestamp = DateTime.UtcNow,
+                        BatteryPercentage = _random.Next(1, 100),
+                        ChargeState = "Charging"
+                    });
+
+                var content = new StringContent(serializedContent, Encoding.UTF8, "application/json");
+
+                try
                 {
-                    _logger.Error("Publish failed because API returned status code " + response.StatusCode);
+                    var response = _httpClient
+                        .PostAsync($"/api/cars/{_configuration.Vin}/data", content)
+                        .GetAwaiter()
+                        .GetResult();
+
+                    if(!response.IsSuccessStatusCode)
+                    {
+                        _logger.Error("Publish failed because API returned status code " + response.StatusCode);
+                    }
                 }
-            }
-            catch (OperationCanceledException)
-            {
-                _logger.Error("Publish timed out");
-            }
-            catch (Exception ex)
-            {
-                _logger.Error("Publish failed because " + ex.Message);
-            }
+                catch (OperationCanceledException)
+                {
+                    _logger.Error("Publish timed out");
+                }
+                catch (Exception ex)
+                {
+                    _logger.Error("Publish failed because " + ex.Message);
+                }
 
-            ScheduleNextInterval();
+                ScheduleNextInterval();
+            }
         }
     }
 }

@@ -5,6 +5,7 @@ using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using Serilog;
 using Demo.Middlewares;
+using Serilog.Events;
 
 namespace Demo.Car
 {
@@ -16,6 +17,7 @@ namespace Demo.Car
                 .Enrich.FromLogContext()
                 .Enrich.WithCommonProperties()
                 .WriteTo.Seq("http://seq:5341")
+                .WriteTo.Console(restrictedToMinimumLevel: LogEventLevel.Fatal)
                 .CreateLogger();
 
             var host = new HostBuilder()
@@ -46,13 +48,16 @@ namespace Demo.Car
 
             serviceCollection.AddSingleton(Log.Logger);
             serviceCollection.AddSingleton(configuration);
+            serviceCollection.AddTransient<CorrelationMessageHandler>();
 
-            serviceCollection.AddHttpClient("car-api", _ =>
-            {
-                Log.Logger.Information("Using CarApiUrl: " + configuration.CarApiUrl);
-                _.BaseAddress = new Uri(configuration.CarApiUrl);
-                _.Timeout = TimeSpan.FromSeconds(1);
-            });
+            serviceCollection
+                .AddHttpClient("car-api", _ =>
+                {
+                    Log.Logger.Information("Using CarApiUrl: " + configuration.CarApiUrl);
+                    _.BaseAddress = new Uri(configuration.CarApiUrl);
+                    _.Timeout = TimeSpan.FromSeconds(1);
+                })
+                .AddHttpMessageHandler<CorrelationMessageHandler>();
         }
     }
 }
