@@ -4,7 +4,7 @@ import bunyan = require("bunyan");
 import { NextFunction } from "connect";
 
 export const correlationmiddleware = (req: Request, res: Response, next: NextFunction) => {
-    let correlationId = req.headers["Demo-CorrelationId"];
+    let correlationId = req.get("Demo-CorrelationId");
     
     if(correlationId == null || correlationId == "") {
       correlationId = Guid.newGuid();
