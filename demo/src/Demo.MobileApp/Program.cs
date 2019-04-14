@@ -41,6 +41,7 @@ namespace Demo.MobileApp
             context.Configuration.GetSection("MobileApp").Bind(configuration);
 
             serviceCollection.AddHostedService<CallMobileApi>();
+            serviceCollection.AddHostedService<CallSummary>();
 
             serviceCollection.AddSingleton(Log.Logger);
             serviceCollection.AddSingleton(configuration);
