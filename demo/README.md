@@ -11,3 +11,10 @@
 
 - Continuously have the cars supplying data, randomize intervals
 - Mobile apps make requests continuously, randomize intervals
+
+## Links
+
+- [Seq](http://localhost:8080)
+- [Load balancer dashboard Car API](http://localhost:1936)
+- [Load balancer dashboard User API](http://localhost:1937)
+- [Load balancer dashboard Mobile API](http://localhost:1938)
