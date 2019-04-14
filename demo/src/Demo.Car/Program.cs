@@ -13,7 +13,7 @@ namespace Demo.Car
         {
             Log.Logger = new LoggerConfiguration()
                 .Enrich.FromLogContext()
-                .WriteTo.Console()
+                .WriteTo.Seq("http://seq:5341")
                 .CreateLogger();
 
             var host = new HostBuilder()
