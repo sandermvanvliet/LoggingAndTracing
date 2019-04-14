@@ -19,7 +19,7 @@ namespace Demo.Middlewares
                     CorrelationContext.Instance = new CorrelationContext();
                 }
 
-                request.Headers.Add(CorrelationIdHeaderName, CorrelationContext.Instance.CorrelationId.ToString("D"));
+                request.Headers.Add(CorrelationIdHeaderName, CorrelationContext.Instance.CorrelationId);
             }
 
             return await base.SendAsync(request, cancellationToken);

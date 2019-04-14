@@ -18,11 +18,14 @@ namespace Demo.Middlewares
 
         public async Task InvokeAsync(HttpContext context)
         {
-            var correlationId = GetCorrelationIdFromRequest(context.Request);
+            CorrelationContext.Instance = new CorrelationContext
+            {
+                CorrelationId = GetCorrelationIdFromRequest(context.Request)
+            };
 
             // Properties are disposable so we can ensure that
             // we remove the property after the next middleware is handled.
-            using(LogContext.PushProperty("correlation_id", correlationId))
+            using (LogContext.PushProperty("correlation_id", CorrelationContext.Instance.CorrelationId))
             {
                 await _next(context);
             }
@@ -30,11 +33,11 @@ namespace Demo.Middlewares
 
         private string GetCorrelationIdFromRequest(HttpRequest request)
         {
-            if(request.Headers.Any(header => header.Key == CorrelationIdHeaderName))
+            if (request.Headers.Any(header => header.Key == CorrelationIdHeaderName))
             {
                 var value = request.Headers[CorrelationIdHeaderName].FirstOrDefault();
 
-                if(!string.IsNullOrWhiteSpace(value))
+                if (!string.IsNullOrWhiteSpace(value))
                 {
                     return value.Trim();
                 }

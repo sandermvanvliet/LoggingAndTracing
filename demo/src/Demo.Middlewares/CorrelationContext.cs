@@ -13,6 +13,6 @@ namespace Demo.Middlewares
             set => AsyncInstance.Value = value;
         }
 
-        public Guid CorrelationId { get; set; } = Guid.NewGuid();
+        public string CorrelationId { get; set; } = Guid.NewGuid().ToString("D");
     }
 }

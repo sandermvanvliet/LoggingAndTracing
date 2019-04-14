@@ -47,11 +47,15 @@ namespace Demo.CarApi
             serviceCollection.AddSingleton(Log.Logger);
             serviceCollection.AddSingleton(configuration);
 
-            serviceCollection.AddHttpClient("user-api", _ =>
-            {
-                _.BaseAddress = new Uri(configuration.UserApiUrl);
-                _.Timeout = TimeSpan.FromSeconds(1);
-            });
+            serviceCollection.AddTransient<CorrelationMessageHandler>();
+
+            serviceCollection
+                .AddHttpClient("user-api", _ =>
+                {
+                    _.BaseAddress = new Uri(configuration.UserApiUrl);
+                    _.Timeout = TimeSpan.FromSeconds(1);
+                })
+                .AddHttpMessageHandler<CorrelationMessageHandler>();
         }
     }
 }
