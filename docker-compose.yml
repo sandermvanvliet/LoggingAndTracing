@@ -3,7 +3,7 @@ version: "3.7"
 services:
 # Applications
   carapp_1:
-    image: demo-car:1.0
+    image: demo-car:0.8
     environment:
       "CarApp:CarApiUrl": http://carapi/
       "CarApp:Vin": VINNY_JONES
@@ -11,7 +11,7 @@ services:
       APP_INSTANCE: 1
 
   carapp_2:
-    image: demo-car:1.0
+    image: demo-car:0.8
     environment:
       "CarApp:CarApiUrl": http://carapi/
       "CarApp:Vin": VINNY_JONES
@@ -19,7 +19,7 @@ services:
       APP_INSTANCE: 2
 
   carapp_3:
-    image: demo-car:1.0
+    image: demo-car:0.8
     environment:
       "CarApp:CarApiUrl": http://carapi/
       "CarApp:Vin": VINNY_JONES
@@ -27,7 +27,7 @@ services:
       APP_INSTANCE: 3
 
   mobileapp_1:
-    image: demo-mobileapp:1.0
+    image: demo-mobileapp:0.8
     environment:
       "MobileApp:MobileApiUrl": http://mobileapi/
       "MobileApp:UserId": MR_USER
@@ -36,7 +36,7 @@ services:
       APP_INSTANCE: 1
 
   mobileapp_2:
-    image: demo-mobileapp:1.0
+    image: demo-mobileapp:0.8
     environment:
       "MobileApp:MobileApiUrl": http://mobileapi/
       "MobileApp:UserId": MR_USER
@@ -45,7 +45,7 @@ services:
       APP_INSTANCE: 2
 
   mobileapp_3:
-    image: demo-mobileapp:1.0
+    image: demo-mobileapp:0.8
     environment:
       "MobileApp:MobileApiUrl": http://mobileapi/
       "MobileApp:UserId": MR_USER
@@ -55,7 +55,7 @@ services:
 
 # APIs
   carapi_1:
-    image: demo-carapi:1.0
+    image: demo-carapi:0.8
     environment:
       "CarApi:UserApiUrl": http://userapi/
       APP_NAME: carapi
@@ -64,7 +64,7 @@ services:
       - "80"
   
   carapi_2:
-    image: demo-carapi:1.0
+    image: demo-carapi:0.8
     environment:
       "CarApi:UserApiUrl": http://userapi/
       APP_NAME: carapi
@@ -73,7 +73,7 @@ services:
       - "80"
 
   userapi_1:
-    image: demo-userapi:1.0
+    image: demo-userapi:0.8
     environment:
       "UserApi:CarApiUrl": http://carapi/
       APP_NAME: userapi
@@ -82,7 +82,7 @@ services:
       - "80"
 
   userapi_2:
-    image: demo-userapi:1.0
+    image: demo-userapi:0.8
     environment:
       "UserApi:CarApiUrl": http://carapi/
       APP_NAME: userapi
@@ -91,7 +91,7 @@ services:
       - "80"
 
   mobileapi_1:
-    image: demo-mobileapi:1.0
+    image: demo-mobileapi:0.8
     environment:
       USER_API_URL: http://userapi
       CAR_API_URL: http://carapi
@@ -103,7 +103,7 @@ services:
       - "80"
 
   mobileapi_2:
-    image: demo-mobileapi:1.0
+    image: demo-mobileapi:0.8
     environment:
       USER_API_URL: http://userapi
       CAR_API_URL: http://carapi
