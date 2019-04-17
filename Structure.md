@@ -10,6 +10,7 @@
 - Use Seq to receive log files
   - [SHOW] Aggregated logs in one place
   - Can you tell what's going on?
+  - [TELL] Secure messages pushing via API key (provided by platform)
 - Add common properties
   - [SHOW] how we can identify applications
   - Can you tell what's going on?
