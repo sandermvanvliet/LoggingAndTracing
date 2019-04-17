@@ -67,3 +67,9 @@
       - Findability
       - Alerting possibilities
       - Data analysis
+  - Risks:
+    - Too many log messages
+    - Performance hits
+    - Log aggregtor not working
+    - GDPR!
+    - Logging sensitive data
