@@ -11,7 +11,7 @@ var testIntegrationProjectPattern = "./**/*.Tests.Integration.csproj";
 var testAcceptanceProjectPattern = "./**/*.Tests.Acceptance.csproj";
 var isTfsBuild = (EnvironmentVariable("TF_BUILD") ?? "False").ToLower() == "true";
 var testLogger = isTfsBuild ? "trx" : "console;verbosity=normal";
-var version = Argument("Version", "1.0");
+var version = Argument("BuildVersion", "1.0");
 var solutionFile = GetFiles("**/*.sln").First().ToString();
 
 artifactsPath = ((DirectoryPath)Directory(artifactsPath)).MakeAbsolute(Context.Environment).ToString();
