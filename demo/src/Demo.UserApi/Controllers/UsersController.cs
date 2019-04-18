@@ -1,4 +1,6 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using System;
+using System.Net;
+using Microsoft.AspNetCore.Mvc;
 using Serilog;
 
 namespace Demo.UserApi.Controllers
@@ -19,6 +21,12 @@ namespace Demo.UserApi.Controllers
         {
             _logger.Information($"Trying to find user for {vin}");
             
+            if(DateTime.UtcNow.TimeOfDay.Seconds % 2 == 0)
+            {
+                _logger.Error("Database is down, can't get user");
+                return StatusCode((int)HttpStatusCode.InternalServerError);
+            }
+
             return Ok(new User {Name = "Joe Blogs"});
         }
 
